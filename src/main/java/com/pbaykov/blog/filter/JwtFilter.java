@@ -1,10 +1,7 @@
-package com.pbaykov.AssignmentSubmissionApp.filter;
+package com.pbaykov.blog.filter;
 
-import com.pbaykov.AssignmentSubmissionApp.domain.User;
-import com.pbaykov.AssignmentSubmissionApp.respository.UserRepository;
-import com.pbaykov.AssignmentSubmissionApp.util.JwtUtil;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
+import com.pbaykov.blog.respository.UserRepository;
+import com.pbaykov.blog.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,13 +14,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {

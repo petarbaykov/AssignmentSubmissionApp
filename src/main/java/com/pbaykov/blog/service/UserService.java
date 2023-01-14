@@ -1,11 +1,11 @@
-package com.pbaykov.AssignmentSubmissionApp.service;
+package com.pbaykov.blog.service;
 
-import com.pbaykov.AssignmentSubmissionApp.domain.Authority;
-import com.pbaykov.AssignmentSubmissionApp.domain.User;
-import com.pbaykov.AssignmentSubmissionApp.dto.UserDTO;
-import com.pbaykov.AssignmentSubmissionApp.respository.AuthorityRepository;
-import com.pbaykov.AssignmentSubmissionApp.respository.UserRepository;
-import com.pbaykov.AssignmentSubmissionApp.util.CustomPasswordEncoder;
+import com.pbaykov.blog.domain.Authority;
+import com.pbaykov.blog.domain.User;
+import com.pbaykov.blog.dto.UserDTO;
+import com.pbaykov.blog.respository.AuthorityRepository;
+import com.pbaykov.blog.respository.UserRepository;
+import com.pbaykov.blog.util.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

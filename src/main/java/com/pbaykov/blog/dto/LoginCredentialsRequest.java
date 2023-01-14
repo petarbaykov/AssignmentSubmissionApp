@@ -1,4 +1,4 @@
-package com.pbaykov.AssignmentSubmissionApp.dto;
+package com.pbaykov.blog.dto;
 
 public class LoginCredentialsRequest {
     private String username;

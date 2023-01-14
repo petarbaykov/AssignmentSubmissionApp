@@ -1,11 +1,10 @@
-package com.pbaykov.AssignmentSubmissionApp.domain;
+package com.pbaykov.blog.domain;
 
 import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;

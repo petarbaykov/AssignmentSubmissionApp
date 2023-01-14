@@ -1,4 +1,4 @@
-package com.pbaykov.AssignmentSubmissionApp.util;
+package com.pbaykov.blog.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

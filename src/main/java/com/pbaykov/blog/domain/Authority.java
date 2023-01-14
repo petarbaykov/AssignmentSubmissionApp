@@ -1,4 +1,4 @@
-package com.pbaykov.AssignmentSubmissionApp.domain;
+package com.pbaykov.blog.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 
