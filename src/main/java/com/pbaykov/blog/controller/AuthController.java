@@ -1,4 +1,4 @@
-package com.pbaykov.blog.web;
+package com.pbaykov.blog.controller;
 
 import ch.qos.logback.core.util.Duration;
 import com.pbaykov.blog.domain.User;
@@ -64,6 +64,12 @@ public class AuthController {
     public ResponseEntity<?> signup (@RequestBody UserDTO request) {
         try {
             User user = userService.createUser(request);
+
+            // TODO
+            // 1. Validate email
+            // 2. Validate username exists
+            // 3. Validate email exists
+            // 4. Validate password length
 
             String token = jwtUtil.generateToken(user);
             ResponseCookie cookie = ResponseCookie.from("jwt", token)
