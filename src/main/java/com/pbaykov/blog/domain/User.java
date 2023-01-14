@@ -26,6 +26,8 @@ public class User implements UserDetails {
     private String email;
     @NotNull
     private String password;
+
+    private String image;
     @NotNull
     private LocalDateTime registeredAt;
 
@@ -69,6 +71,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public LocalDateTime getRegisteredAt() {
