@@ -33,6 +33,7 @@ public class PostService {
 
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
+        post.setImage(request.getImage());
         post.setCreatedAt(LocalDateTime.now());
         post.setCategory(c);
         post.setUser(user);
@@ -61,6 +62,9 @@ public class PostService {
 
         p.setTitle(request.getTitle());
         p.setContent(request.getContent());
+        if (request.getImage() != null) {
+            p.setImage(request.getImage());
+        }
         p.setCategory(c);
         postRepository.save(p);
 

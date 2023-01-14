@@ -3,12 +3,15 @@ package com.pbaykov.blog.controller;
 import com.pbaykov.blog.domain.Post;
 import com.pbaykov.blog.domain.User;
 import com.pbaykov.blog.dto.PostRequest;
+import com.pbaykov.blog.service.FileStorageService;
 import com.pbaykov.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,11 +22,20 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private FileStorageService fileStorageService;
 
-    @PostMapping("")
-    public ResponseEntity<?> createPost(@RequestBody PostRequest request, @AuthenticationPrincipal User user) {
+    @PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<?> createPost(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("category") Long category,
+            @RequestParam("image") MultipartFile image,
+            @AuthenticationPrincipal User user
+    ) {
         try {
-            Post post = postService.createPost(request, user);
+            String imageFilename = fileStorageService.storeFile(image);
+            Post post = postService.createPost(new PostRequest(title, content, category, imageFilename), user);
 
             return ResponseEntity.ok().body(post);
         } catch (Exception e) {
@@ -32,10 +44,21 @@ public class PostController {
         }
     }
 
-    @PutMapping("{postId}")
-    public ResponseEntity<?> updatePost(@PathVariable Long postId, @RequestBody PostRequest request, @AuthenticationPrincipal User user) {
+    @PutMapping(value = "{postId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<?> updatePost(
+            @PathVariable Long postId,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("category") Long category,
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) {
         try {
-            Post post = postService.updatePost(postId, request);
+            String imageFilename = null;
+            if (image != null) {
+                imageFilename = fileStorageService.storeFile(image);
+            }
+            
+            Post post = postService.updatePost(postId, new PostRequest(title, content, category, imageFilename));
 
             // TODO: Check if editing post created by authenticated user
             return ResponseEntity.ok().body(post);
