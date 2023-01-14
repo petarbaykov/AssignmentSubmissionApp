@@ -14,10 +14,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -30,29 +33,29 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-//        if (request.getCookies() == null) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (!StringUtils.hasText(header) || (StringUtils.hasText(header)) && !header.startsWith("Bearer ")) {
+        if (request.getCookies() == null) {
             chain.doFilter(request, response);
             return;
         }
 
-        final String token = header.split(" ")[1].trim();
-//        // Get authorization header and validate
-//        Optional<Cookie> jwtOpt = Arrays.stream(request.getCookies())
-//                .filter(cookie -> "jwt".equals(cookie.getName()))
-//                .findAny();
-//
-//        if (jwtOpt.isEmpty()) {
+//        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if (!StringUtils.hasText(header) || (StringUtils.hasText(header)) && !header.startsWith("Bearer ")) {
 //            chain.doFilter(request, response);
 //            return;
 //        }
 //
-//        String token = jwtOpt.get().getValue();
+//        final String token = header.split(" ")[1].trim();
+//        // Get authorization header and validate
+        Optional<Cookie> jwtOpt = Arrays.stream(request.getCookies())
+                .filter(cookie -> "jwt".equals(cookie.getName()))
+                .findAny();
+
+        if (jwtOpt.isEmpty()) {
+            chain.doFilter(request, response);
+            return;
+        }
+//
+        String token = jwtOpt.get().getValue();
         UserDetails userDetails = userRepository.findByUsername(jwtUtil.getUsernameFromToken(token)).orElse(null);
 //        try {
 //            Optional<User> appUserOpt = userRepository.findByUsername(jwtUtil.getUsernameFromToken(token));
