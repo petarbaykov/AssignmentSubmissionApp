@@ -1,6 +1,6 @@
 package com.pbaykov.AssignmentSubmissionApp.dto;
 
-public class AuthCredentialsRequest {
+public class LoginCredentialsRequest {
     private String username;
     private String password;
 
