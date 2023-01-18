@@ -49,6 +49,7 @@ public class AuthController {
             ResponseCookie cookie = ResponseCookie.from("jwt", token)
                     .domain(domain)
                     .path("/")
+                    .httpOnly(true)
                     .maxAge(Duration.buildByDays(30).getMilliseconds())
                     .build();
 
@@ -75,6 +76,7 @@ public class AuthController {
             ResponseCookie cookie = ResponseCookie.from("jwt", token)
                     .domain(domain)
                     .path("/")
+                    .httpOnly(true)
                     .maxAge(Duration.buildByDays(30).getMilliseconds())
                     .build();
 
