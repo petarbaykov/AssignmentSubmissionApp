@@ -72,7 +72,11 @@ public class PostService {
     }
 
     public List<Post> findAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    public List<Post> findAllPostsForUser(Long userId) {
+      return postRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
     public Post findPostById(Long postId) throws Exception {

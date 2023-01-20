@@ -74,6 +74,14 @@ public class PostController {
         return ResponseEntity.ok().body(posts);
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<?> getAllUserPosts(@AuthenticationPrincipal User user) {
+        System.out.println(user.getId());
+        List<Post> posts = postService.findAllPostsForUser(user.getId());
+
+        return ResponseEntity.ok().body(posts);
+    }
+
     @GetMapping("{postId}")
     public ResponseEntity<?> findSinglePost(@PathVariable Long postId) {
         try {
