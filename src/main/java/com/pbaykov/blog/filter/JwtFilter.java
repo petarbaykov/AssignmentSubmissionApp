@@ -38,14 +38,6 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-//        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        if (!StringUtils.hasText(header) || (StringUtils.hasText(header)) && !header.startsWith("Bearer ")) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-//
-//        final String token = header.split(" ")[1].trim();
-//        // Get authorization header and validate
         Optional<Cookie> jwtOpt = Arrays.stream(request.getCookies())
                 .filter(cookie -> "jwt".equals(cookie.getName()))
                 .findAny();
@@ -54,19 +46,10 @@ public class JwtFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-//
+
         String token = jwtOpt.get().getValue();
         UserDetails userDetails = userRepository.findByUsername(jwtUtil.getUsernameFromToken(token)).orElse(null);
-//        try {
-//            Optional<User> appUserOpt = userRepository.findByUsername(jwtUtil.getUsernameFromToken(token));
-//            userDetails = proffessoUserRepo
-//                    .findByEmail(jwtUtil.getUsernameFromToken(token))
-//                    .map(proffessoUser -> new User(proffessoUser, appUserOpt))
-//                    .orElse(null);
-//        } catch (ExpiredJwtException | SignatureException e) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
+
 
         // Get jwt token and validate
         if (!jwtUtil.validateToken(token, userDetails)) {

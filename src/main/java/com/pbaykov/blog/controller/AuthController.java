@@ -46,15 +46,22 @@ public class AuthController {
             user.setPassword(null);
 
             String token = jwtUtil.generateToken(user);
-            ResponseCookie cookie = ResponseCookie.from("jwt", token)
+            ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
                     .domain(domain)
                     .path("/")
                     .httpOnly(true)
                     .maxAge(Duration.buildByDays(30).getMilliseconds())
                     .build();
 
+            ResponseCookie authCookie = ResponseCookie.from("authenticated", "1")
+                    .domain(domain)
+                    .path("/")
+                    .maxAge(Duration.buildByDays(30).getMilliseconds())
+                    .build();
+
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, authCookie.toString())
                     .body(token);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -73,15 +80,22 @@ public class AuthController {
             // 4. Validate password length
 
             String token = jwtUtil.generateToken(user);
-            ResponseCookie cookie = ResponseCookie.from("jwt", token)
+            ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
                     .domain(domain)
                     .path("/")
                     .httpOnly(true)
                     .maxAge(Duration.buildByDays(30).getMilliseconds())
                     .build();
 
+            ResponseCookie authCookie = ResponseCookie.from("authenticated", "1")
+                    .domain(domain)
+                    .path("/")
+                    .maxAge(Duration.buildByDays(30).getMilliseconds())
+                    .build();
+
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, authCookie.toString())
                     .body(token);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
