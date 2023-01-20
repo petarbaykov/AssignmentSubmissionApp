@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -75,9 +76,13 @@ public class PostController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<?> getAllUserPosts(@AuthenticationPrincipal User user) {
-        System.out.println(user.getId());
-        List<Post> posts = postService.findAllPostsForUser(user.getId());
+    public ResponseEntity<?> getAllUserPosts(@AuthenticationPrincipal User user, @RequestParam(required = false) Long categoryId) {
+        List<Post> posts = new ArrayList<>();
+        if (categoryId != null) {
+            posts = postService.findAllPostsForUserByCategory(user.getId(), categoryId);
+        } else {
+            posts = postService.findAllPostsForUser(user.getId());
+        }
 
         return ResponseEntity.ok().body(posts);
     }
